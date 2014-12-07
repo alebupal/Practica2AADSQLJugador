@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Practica2AADSQLJugador</string>
+
+
+
+
+
+
+    <string name="cEditar">Editar</string>
+    <string name="cBorrar">Borrar</string>
+    <string name="mEditar">¿Seguro que desea editar?</string>
+    <string name="mBorrar">¿Seguro que desea borrar?</string>
+    <string name="jugadorBorrado">Jugador borrado</string>
+    <string name="jugadorInsertado">Jugador insertado</string>
+    <string name="jugadorEditado">Jugador editado</string>
+    <string name="vacio">Algun/os campos vacíos</string>
+    <string name="menuAnadir">Añadir jugador</string>
+    <string name="menuEditar">Editar jugador</string>
+    <string name="menuEliminar">Eliminar jugador</string>
+    <string name="etAnadirNombre">Nombre</string>
+    <string name="etAnadirTelefono">Teléfono</string>
+    <string name="etAnadirValoracion">Valoración</string>
+    <string name="etAnadirFnac">Fecha nacimiento</string>
+    <string name="title_activity_menu">Menu</string>
+
+    <string name="btPartido">Ver partidos</string>
+    <string name="btJugador">Ver jugador</string>
+
+
+</resources>

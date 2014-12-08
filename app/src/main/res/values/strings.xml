@@ -21,7 +21,8 @@
     <string name="title_activity_menu">Menu</string>
     <string name="btPartido">Ver partidos</string>
     <string name="btJugador">Ver jugador</string>
-    <string name="title_activity_ver_partido">VerPartido</string>
+    <string name="title_activity_ver_partido">Ver Partido</string>
+    <string name="title_activity_ver_jugador">Ver Jugador</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="repetido">Partido repetido</string>
@@ -32,5 +33,6 @@
     <string name="etAnadirContrincanteT">Contrincante:</string>
     <string name="etAnadirFnacT">Fecha nacimiento:</string>
     <string name="etMedia">Media:</string>
+    <string name="anadeJ">Añade algún jugador</string>
 
 </resources>

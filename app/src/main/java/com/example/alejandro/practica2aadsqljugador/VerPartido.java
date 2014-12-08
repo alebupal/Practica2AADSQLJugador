@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,15 +14,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
-import java.util.AbstractList;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -61,6 +55,7 @@ public class VerPartido extends Activity {
         setContentView(R.layout.activity_ver_partido);
         gp = new GestorPartido(this);
         gj = new GestorJugador(this);
+
         lv = (ListView) findViewById(R.id.lvPartido);
         registerForContextMenu(lv);
     }
@@ -111,50 +106,56 @@ public class VerPartido extends Activity {
         List<Jugador> alj;
         gj.open();
         alj = gj.select();
-        ArrayAdapter<Jugador> dataAdapter = new ArrayAdapter<Jugador>(this, android.R.layout.simple_spinner_item, alj);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerNombre.setAdapter(dataAdapter);
+        if(alj.size()==0){
+            tostada(getString(R.string.anadeJ));
+            finish();
 
-        spinnerNombre.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                idJugador = ((Jugador)parent.getItemAtPosition(pos)).getId();
-                tostada(idJugador+"");
+        }else {
+            ArrayAdapter<Jugador> dataAdapter = new ArrayAdapter<Jugador>(this, android.R.layout.simple_spinner_item, alj);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerNombre.setAdapter(dataAdapter);
 
-            }
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-        alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-            public void onClick(final DialogInterface dialog, int whichButton) {
-                final EditText etAnadirValoracion, etAnadirContrincante;
-                final String valoracion,contrincante;
-
-                etAnadirValoracion=(EditText)vista.findViewById(R.id.etAnadirValoracion);
-                etAnadirContrincante=(EditText)vista.findViewById(R.id.etAnadirContrincante);
-
-                valoracion=etAnadirValoracion.getText().toString();
-                contrincante=etAnadirContrincante.getText().toString();
-
-                if(etAnadirValoracion.getText().toString().equals("")==true || etAnadirContrincante.getText().toString().equals("")==true){
-                    tostada(getString(R.string.vacio));
-                    Log.v("id",idJugador+"");
-                }else{
-
-                    Partido j=new Partido(Integer.parseInt(valoracion),contrincante,idJugador);
-                    if(comprobar(j)==true){
-                        long id=gp.insert(j);
-                        acp.getCursor().close();
-                        acp.changeCursor(gp.getCursor(null,null,null));
-                        tostada(getString(R.string.jugadorInsertado));
-                    }else{
-                        tostada(getString(R.string.repetido));
-                    }
+            spinnerNombre.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                    idJugador = ((Jugador) parent.getItemAtPosition(pos)).getId();
 
                 }
-            }
-        });
-        alert.setNegativeButton(android.R.string.no, null);
-        alert.show();
+
+                public void onNothingSelected(AdapterView<?> parent) {
+                }
+            });
+            alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                public void onClick(final DialogInterface dialog, int whichButton) {
+                    final EditText etAnadirValoracion, etAnadirContrincante;
+                    final String valoracion, contrincante;
+
+                    etAnadirValoracion = (EditText) vista.findViewById(R.id.etAnadirValoracion);
+                    etAnadirContrincante = (EditText) vista.findViewById(R.id.etAnadirContrincante);
+
+                    valoracion = etAnadirValoracion.getText().toString();
+                    contrincante = etAnadirContrincante.getText().toString();
+
+                    if (etAnadirValoracion.getText().toString().equals("") == true || etAnadirContrincante.getText().toString().equals("") == true) {
+                        tostada(getString(R.string.vacio));
+                    } else {
+
+                        Partido j = new Partido(Integer.parseInt(valoracion), contrincante, idJugador);
+                        if (comprobar(j) == true) {
+                            long id = gp.insert(j);
+                            acp.getCursor().close();
+                            acp.changeCursor(gp.getCursor(null, null, null));
+                            tostada(getString(R.string.jugadorInsertado));
+                        } else {
+                            tostada(getString(R.string.repetido));
+                        }
+
+                    }
+                }
+            });
+            alert.setNegativeButton(android.R.string.no, null);
+            alert.show();
+            return true;
+        }
         return true;
     }
 

@@ -20,27 +20,11 @@ public class Partido {
         this.contrincante = contrincante;
     }
 
-    public Partido(int valoracion, String contrincante, long idJugador) {
+     public Partido(int valoracion, String contrincante, long idJugador) {
+        this.idJugador = idJugador;
         this.valoracion = valoracion;
         this.contrincante = contrincante;
-        this.idJugador = idJugador;
     }
-    /* public Partido(int valoracion, String contrincante, long id_jugador) {
-        this.idJugador = idJugador;
-        this.valoracion = valoracion;
-        this.contrincante = contrincante;
-    }*/
-
-    /*public Partido(String contrincante, long id, long id_jugador, String valoracion) {
-        this.contrincante = contrincante;
-        this.id = id;
-        this.idJugador = idJugador;
-        try {
-            this.valoracion = Integer.parseInt(valoracion);
-        } catch (NumberFormatException e) {
-            this.valoracion = 0;
-        }
-    }*/
 
     public long getId() {
         return id;

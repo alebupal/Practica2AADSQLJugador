@@ -13,12 +13,6 @@ public class Jugador implements Serializable,Comparable<Jugador>{
     private String telefono;
     private String fnac;
 
-    //1º Constructor predeterminado
-    //2º Constructor completo
-    //3º Getter and Setter
-    //4º equals, hasCode -> clave principal de la tabla
-    //5º compareTo
-    //6º toString
 
     public Jugador() {
     }

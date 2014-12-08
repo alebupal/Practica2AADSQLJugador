@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,7 +106,6 @@ public class GestorJugador {
         String groupby= null;
         String having= null;
         String orderby= Contrato.TablaJugador.NOMBRE+ " ASC";
-        Log.v("asdasd",""+proyeccion+" "+where+" "+parametros+" ");
         Cursor c = bd.query(Contrato.TablaJugador.TABLA, proyeccion,where, parametros, groupby, having, orderby);
         c.moveToFirst();
         Jugador j= getRow(c);

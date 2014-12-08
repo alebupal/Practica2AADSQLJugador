@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/etAnadirTelefono"
-        android:hint="@string/etAnadirTelefono" />
+        android:hint="@string/etAnadirTelefono"
+        android:inputType="number" />
 
     <EditText
         android:layout_width="match_parent"

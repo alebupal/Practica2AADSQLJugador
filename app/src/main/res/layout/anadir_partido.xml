@@ -4,17 +4,11 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
+    <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/etAnadirNombre"
-        android:hint="@string/etAnadirNombre" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/etAnadirTelefono"
-        android:hint="@string/etAnadirTelefono" />
+        android:id="@+id/spinnerAnadirNombre"
+        android:layout_gravity="center_horizontal" />
 
     <EditText
         android:layout_width="fill_parent"
@@ -27,7 +21,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/etAnadirFnac"
-        android:hint="@string/etAnadirFnac" />
+        android:id="@+id/etAnadirContrincante"
+        android:hint="@string/etAnadirContrincante" />
 
 </LinearLayout>

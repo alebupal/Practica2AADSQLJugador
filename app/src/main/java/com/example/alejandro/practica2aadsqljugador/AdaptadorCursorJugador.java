@@ -6,43 +6,46 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
-import android.widget.EditText;
 import android.widget.TextView;
 
 
 /**
  * Created by Alejandro on 07/12/2014.
  */
-public class AdaptadorCursor extends CursorAdapter {
+public class AdaptadorCursorJugador extends CursorAdapter {
 
-    private TextView tvNombre, tvTelefono, tvValoracion, tvFnac, tvID;
+    private TextView tvNombre, tvTelefono, tvMedia, tvFnac;
 
 
-    public AdaptadorCursor(Context context, Cursor c) {
+    public AdaptadorCursorJugador(Context context, Cursor c) {
         super(context, c,true);
     }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup vg) {
         LayoutInflater i = LayoutInflater.from(vg.getContext());
-        View v = i.inflate(R.layout.lista_detalle, vg, false);
+        View v = i.inflate(R.layout.lista_detalle_jugador, vg, false);
         return v;
     }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         GestorJugador gj=new GestorJugador(context);
+        GestorPartido gp=new GestorPartido(context);
         Jugador j;
         j=gj.getRow(cursor);
+
         tvNombre=(TextView) view.findViewById(R.id.tvNombre);
         tvTelefono=(TextView) view.findViewById(R.id.tvTelefono);
-        //tvValoracion=(TextView) view.findViewById(R.id.tvValoracion);
         tvFnac=(TextView) view.findViewById(R.id.tvFnac);
+        tvMedia=(TextView) view.findViewById(R.id.tvMedia);
 
         tvNombre.setText(j.getNombre());
         tvTelefono.setText(j.getTelefono());
-        //tvValoracion.setText(j.getValoracion()+"");
         tvFnac.setText(j.getFnac());
+
+        gp.open();
+        tvMedia.setText(gp.getMediaID(j.getId()).toString());
     }
 
 }

@@ -3,7 +3,6 @@ package com.example.alejandro.practica2aadsqljugador;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -13,17 +12,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class MainActivity extends Activity {
+public class VerJugador extends Activity {
 
     private GestorJugador gj;
-    private AdaptadorCursor ac;
+    private GestorPartido gp;
+    private AdaptadorCursorJugador acj;
     private ListView lv;
     private long idJugador=0;
 
@@ -50,9 +48,10 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_ver_jugador);
         gj=new GestorJugador(this);
-        lv=(ListView)findViewById(R.id.lvLista);
+        gp=new GestorPartido(this);
+        lv=(ListView)findViewById(R.id.lvJugador);
         registerForContextMenu(lv);
     }
 
@@ -82,10 +81,10 @@ public class MainActivity extends Activity {
     protected void onResume() {
         gj.open();
         super.onResume();
-        final ListView lv= (ListView) findViewById(R.id.lvLista);
+        final ListView lv= (ListView) findViewById(R.id.lvJugador);
         Cursor c = gj.getCursor(null,null,null);
-        ac = new AdaptadorCursor(this, c);
-        lv.setAdapter(ac);
+        acj = new AdaptadorCursorJugador(this, c);
+        lv.setAdapter(acj);
     }
 
     private void tostada(String s) {
@@ -96,32 +95,30 @@ public class MainActivity extends Activity {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle(getString(R.string.menuAnadir));
         LayoutInflater inflater = LayoutInflater.from(this);
-        final View vista = inflater.inflate(R.layout.anadir, null);
+        final View vista = inflater.inflate(R.layout.anadir_jugador, null);
         alert.setView(vista);
         alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(final DialogInterface dialog, int whichButton) {
-                EditText etAnadirNombre, etAnadirTelefono, etAnadirValoracion, etAnadirFnac;
+                EditText etAnadirNombre, etAnadirTelefono, etAnadirFnac;
 
                 etAnadirNombre=(EditText)vista.findViewById(R.id.etAnadirNombre);
                 etAnadirTelefono=(EditText)vista.findViewById(R.id.etAnadirTelefono);
-                etAnadirValoracion=(EditText)vista.findViewById(R.id.etAnadirValoracion);
                 etAnadirFnac=(EditText)vista.findViewById(R.id.etAnadirFnac);
 
-                String nombre,telefono,fecha,valoracion;
+                String nombre,telefono,fecha;
 
                 nombre=etAnadirNombre.getText().toString();
                 telefono=etAnadirTelefono.getText().toString();
-                valoracion=etAnadirValoracion.getText().toString();
                 fecha=etAnadirFnac.getText().toString();
 
-                if(etAnadirNombre.getText().toString().equals("")==true || etAnadirTelefono.getText().toString().equals("")==true || etAnadirValoracion.getText().toString().equals("")==true || etAnadirFnac.getText().toString().equals("")==true){
+                if(etAnadirNombre.getText().toString().equals("")==true || etAnadirTelefono.getText().toString().equals("")==true || etAnadirFnac.getText().toString().equals("")==true){
                     tostada(getString(R.string.vacio));
                 }else{
-                    Jugador j=new Jugador(nombre,telefono,valoracion,fecha);
+                    Jugador j=new Jugador(nombre,telefono,fecha);
 
                     long id=gj.insert(j);
-                    ac.getCursor().close();
-                    ac.changeCursor(gj.getCursor(null,null,null));
+                    acj.getCursor().close();
+                    acj.changeCursor(gj.getCursor(null,null,null));
                     tostada(getString(R.string.jugadorInsertado));
                 }
             }
@@ -139,8 +136,10 @@ public class MainActivity extends Activity {
             public void onClick(DialogInterface dialog, int whichButton) {
                 Cursor c=(Cursor)lv.getItemAtPosition(pos); //El elemento del cursor que estas haciendo click
                 Jugador j=GestorJugador.getRow(c);
+                gp.open();
+                gp.deleteIDJugador(j);
                 gj.delete(j);
-                ac.changeCursor(gj.getCursor(null,null,null));
+                acj.changeCursor(gj.getCursor(null,null,null));
             }
         });
         alert.setNegativeButton(android.R.string.no, null);
@@ -152,39 +151,36 @@ public class MainActivity extends Activity {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle(getString(R.string.menuEditar));
         LayoutInflater inflater = LayoutInflater.from(this);
-        final View vista = inflater.inflate(R.layout.editar, null);
+        final View vista = inflater.inflate(R.layout.editar_jugador, null);
         alert.setView(vista);
 
         Cursor c=(Cursor)lv.getItemAtPosition(index);
         final Jugador j=GestorJugador.getRow(c);
 
-        final EditText etEditarNombre, etEditarTelefono, etEditarValoracion, etEditarFnac;
+        final EditText etEditarNombre, etEditarTelefono, etEditarFnac;
 
         etEditarNombre=(EditText)vista.findViewById(R.id.etEditarNombre);
         etEditarTelefono=(EditText)vista.findViewById(R.id.etEditarTelefono);
-        etEditarValoracion=(EditText)vista.findViewById(R.id.etEditarValoracion);
         etEditarFnac=(EditText)vista.findViewById(R.id.etEditarFnac);
 
 
 
-        etEditarNombre.setText(gj.getRow(j.getId()).getNombre());
-        etEditarTelefono.setText(gj.getRow(j.getId()).getTelefono());
-        etEditarValoracion.setText(gj.getRow(j.getId()).getValoracion()+"");
-        etEditarFnac.setText(gj.getRow(j.getId()).getFnac());
+        etEditarNombre.setText(gj.getRowID(j.getId()).getNombre());
+        etEditarTelefono.setText(gj.getRowID(j.getId()).getTelefono());
+        etEditarFnac.setText(gj.getRowID(j.getId()).getFnac());
 
         alert.setPositiveButton("Modificar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 Jugador j2 = new Jugador();
-                if(etEditarNombre.getText().toString().equals("")==true || etEditarTelefono.getText().toString().equals("")==true || etEditarValoracion.getText().toString().equals("")==true || etEditarFnac.getText().toString().equals("")==true){
+                if(etEditarNombre.getText().toString().equals("")==true || etEditarTelefono.getText().toString().equals("")==true || etEditarFnac.getText().toString().equals("")==true){
                     tostada(getString(R.string.vacio));
                 }else{
                     j2.setNombre(etEditarNombre.getText().toString());
                     j2.setTelefono(etEditarTelefono.getText().toString());
-                    j2.setValoracion(Integer.valueOf(etEditarValoracion.getText().toString()));
                     j2.setFnac(etEditarFnac.getText().toString());
                     j2.setId(j.getId());
                     gj.update(j2);
-                    ac.changeCursor(gj.getCursor(null,null,null));
+                    acj.changeCursor(gj.getCursor(null, null, null));
                     tostada(getString(R.string.jugadorEditado));
                 }
             }

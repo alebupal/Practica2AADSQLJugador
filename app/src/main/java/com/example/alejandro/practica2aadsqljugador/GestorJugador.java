@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,6 @@ public class GestorJugador {
         valores.put(Contrato.TablaJugador.FNAC, objeto.getFnac());
         valores.put(Contrato.TablaJugador.NOMBRE,objeto.getNombre());
         valores.put(Contrato.TablaJugador.TELEFONO,objeto.getTelefono());
-        //valores.put(Contrato.TablaJugador.VALORACION,objeto.getValoracion());
         long id = bd.insert(Contrato.TablaJugador.TABLA,null, valores);
         //id es el codigo autonumerico
         return id;
@@ -57,7 +57,6 @@ public class GestorJugador {
         valores.put(Contrato.TablaJugador.FNAC, objeto.getFnac());
         valores.put(Contrato.TablaJugador.NOMBRE, objeto.getNombre());
         valores.put(Contrato.TablaJugador.TELEFONO, objeto.getTelefono());
-       // valores.put(Contrato.TablaJugador.VALORACION, objeto.getValoracion());
         String condicion = Contrato.TablaJugador._ID + " = ?";
         String[] argumentos = { objeto.getId() + "" };
         int cuenta = bd.update(Contrato.TablaJugador.TABLA, valores,
@@ -94,21 +93,21 @@ public class GestorJugador {
         objeto.setId(c.getLong(0));
         objeto.setNombre(c.getString(1));
         objeto.setTelefono(c.getString(2));
-        //objeto.setValoracion(c.getInt(3));
         objeto.setFnac(c.getString(3));
         return objeto;
     }
 
-    public Jugador getRowID(long id) {
+    public Jugador getRowID2(long id) {
         String[] proyeccion= { Contrato.TablaJugador._ID,
                 Contrato.TablaJugador.NOMBRE,
                 Contrato.TablaJugador.TELEFONO,
-                //Contrato.TablaJugador.VALORACION,
                 Contrato.TablaJugador.FNAC};
-        String where= Contrato.TablaJugador._ID+ " = ?";
+        String where= Contrato.TablaJugador._ID + " = ?";
         String[] parametros= new String[] { id+"" };
-        String groupby= null; String having= null;
+        String groupby= null;
+        String having= null;
         String orderby= Contrato.TablaJugador.NOMBRE+ " ASC";
+        Log.v("asdasd",""+proyeccion+" "+where+" "+parametros+" ");
         Cursor c = bd.query(Contrato.TablaJugador.TABLA, proyeccion,where, parametros, groupby, having, orderby);
         c.moveToFirst();
         Jugador j= getRow(c);
@@ -117,7 +116,7 @@ public class GestorJugador {
     }
 
     //Consulta donde saca al jugador por id
-    public Jugador getRow(long id){
+    public Jugador getRowID(long id){
         List<Jugador> lj=select(Contrato.TablaJugador._ID + "= ?",new String[]{id + ""},null);
         if(!lj.isEmpty())
             return lj.get(0);

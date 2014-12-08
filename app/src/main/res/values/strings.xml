@@ -2,31 +2,35 @@
 <resources>
 
     <string name="app_name">Practica2AADSQLJugador</string>
-
-
-
-
-
-
     <string name="cEditar">Editar</string>
     <string name="cBorrar">Borrar</string>
     <string name="mEditar">¿Seguro que desea editar?</string>
     <string name="mBorrar">¿Seguro que desea borrar?</string>
-    <string name="jugadorBorrado">Jugador borrado</string>
-    <string name="jugadorInsertado">Jugador insertado</string>
+    <string name="jugadorBorrado">Borrado correctamente</string>
+    <string name="jugadorInsertado">Insertado correctamente</string>
     <string name="jugadorEditado">Jugador editado</string>
     <string name="vacio">Algun/os campos vacíos</string>
-    <string name="menuAnadir">Añadir jugador</string>
-    <string name="menuEditar">Editar jugador</string>
-    <string name="menuEliminar">Eliminar jugador</string>
+    <string name="menuAnadir">Añadir</string>
+    <string name="menuEditar">Editar</string>
+    <string name="menuEliminar">Eliminar</string>
     <string name="etAnadirNombre">Nombre</string>
     <string name="etAnadirTelefono">Teléfono</string>
     <string name="etAnadirValoracion">Valoración</string>
+    <string name="etAnadirContrincante">Contrincante</string>
     <string name="etAnadirFnac">Fecha nacimiento</string>
     <string name="title_activity_menu">Menu</string>
-
     <string name="btPartido">Ver partidos</string>
     <string name="btJugador">Ver jugador</string>
+    <string name="title_activity_ver_partido">VerPartido</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="repetido">Partido repetido</string>
 
+    <string name="etAnadirNombreT">Nombre:</string>
+    <string name="etAnadirTelefonoT">Teléfono:</string>
+    <string name="etAnadirValoracionT">Valoración:</string>
+    <string name="etAnadirContrincanteT">Contrincante:</string>
+    <string name="etAnadirFnacT">Fecha nacimiento:</string>
+    <string name="etMedia">Media:</string>
 
 </resources>

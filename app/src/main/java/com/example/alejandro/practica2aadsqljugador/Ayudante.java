@@ -10,7 +10,7 @@ import android.util.Log;
  */
 public class Ayudante extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "futbol.sqlite";
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
 
     public Ayudante(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -67,7 +67,7 @@ public class Ayudante extends SQLiteOpenHelper {
                     " AND jugador1.telefono=jugador2."+Contrato.TablaJugador.TELEFONO+
                     " AND jugador1.fnac=jugador2."+Contrato.TablaJugador.FNAC;
             db.execSQL(sql);
-            sql="UPDATE "+Contrato.TablaPartido.TABLA+" SET "+Contrato.TablaPartido.CONTRINCANTE+"='Media anterior'";
+            sql="UPDATE "+Contrato.TablaPartido.TABLA+" SET "+Contrato.TablaPartido.CONTRINCANTE+"='Ninguno'";
             db.execSQL(sql);
             sql="drop table JugadorRespaldo";
             db.execSQL(sql);
